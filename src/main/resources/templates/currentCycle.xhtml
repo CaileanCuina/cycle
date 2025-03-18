@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>User Stats</title>
+    <link rel="stylesheet" href="/css/styles.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="error" th:if="${errorMsg == null}">
+        <h2>Current Cycle</h2>
+        <p>Start Date: <span th:text="${currentCycle.startDate}"></span></p>
+        <p th:if="${currentCycle.endDate != null}">
+            End Date: <span th:text="${currentCycle.endDate}"></span>
+        </p>
+
+        <form th:action="@{/current-cycle/mens}" method="post">
+            <label for="endDateMens">Last Mens Day:</label>
+            <input type="date" id="endDateMens" name="endDateMens" th:value="${endDateMens}" required="true"/>
+
+            <button type="submit" class="btn btn-primary">Update Mens End Date</button>
+        </form>
+        <form th:action="@{/current-cycle}" method="post" th:if="${currentCycle.endDate == null}">
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate" th:value="${endDate}" required="true"/>
+
+            <button type="submit" class="btn btn-primary">Update End Date</button>
+        </form>
+        <div class="error" th:if="${currentCycle.events != null and not #lists.isEmpty(currentCycle.events)}">
+            <h3>Current Period</h3>
+            <table>
+                <tr>
+                    <th>Date</th>
+                </tr>
+                <tr th:each="entry : ${currentCycle.events}"
+                    th:class="'high'">
+                    <td th:text="${entry.occurrenceDate}"></td>
+                </tr>
+            </table>
+        </div>
+        <p/>
+    </div>
+
+    <p th:if="${errorMsg != null}">
+        An Error occurred: <span th:text="${errorMsg}"></span>
+    </p>
+
+    <a href="/postlogin">Back</a>
+    <p/>
+    <a href="/">Logout</a>
+</div>
+</body>
+</html>

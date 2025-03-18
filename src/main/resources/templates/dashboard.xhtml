@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>User Stats</title>
+    <link rel="stylesheet" href="/css/styles.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="error" th:if="${errorMsg == null}">
+        <h2>Welcome, <span th:text="${user.userName}"></span>!</h2>
+        <p>Average Cycle Length: <span th:text="${user.avgCycleLen}"></span> days</p>
+        <p>Cycle Standard Deviation: <span th:text="${user.cycleStd}"></span></p>
+        <p>Average Menstruation Length: <span th:text="${user.avgMensLen}"></span> days</p>
+
+        <h3>Period Forecast</h3>
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Probability</th>
+            </tr>
+            <tr th:each="entry : ${forecast.foreCast}"
+                th:class="${entry.value.name() == 'HIGH' ? 'high' :
+                   (entry.value.name() == 'MEDIUM' ? 'medium' :
+                   (entry.value.name() == 'LOW' ? 'low' : ''))}">
+                <td th:text="${entry.key}"></td>
+                <td th:text="${entry.value}"></td>
+            </tr>
+        </table>
+
+        <h3>New Forecast</h3>
+        <form action="#" th:action="@{/calculate}" method="post">
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate" required="true"/>
+
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate" required="true"/>
+
+            <button type="submit">Calculate</button>
+        </form>
+    </div>
+    <p th:if="${errorMsg != null}">
+        An Error occurred: <span th:text="${errorMsg}"></span>
+    </p>
+    <a href="/postlogin">Back</a>
+    <p/>
+    <a href="/">Logout</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Welcome</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/css/styles.css"/>
+</head>
+<body>
+<div th:if="${not #strings.isEmpty(user.userName)}">
+    <h1>Welcome, <span th:text="${user.userName}">User</span>!</h1>
+    <p>Select an option below:</p>
+
+    <form th:action="@{/current-cycle}" method="get">
+        <button type="submit" class="btn btn-primary">Add Data to Current Cycle</button>
+    </form>
+
+    <form th:action="@{/dashboard}" method="get">
+        <button type="submit" class="btn btn-primary">Go to Dashboard</button>
+    </form>
+
+    <form th:action="@{/all-cycles}" method="get">
+        <button type="submit" class="btn btn-primary">Show all Cycles</button>
+    </form>
+</div>
+</body>
+</html>
