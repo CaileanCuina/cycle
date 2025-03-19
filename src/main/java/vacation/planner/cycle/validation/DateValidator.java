@@ -49,9 +49,9 @@ public class DateValidator {
 
     public static void validateEndDateAfterMensDate(List<LocalDate> mensDates, LocalDate end) {
         if (Objects.isNull(mensDates) || Objects.isNull(end)){
-            throw new InvalidDateException("Start or End Date must not be empty.");
+           return;
         }
-        if (mensDates.stream().noneMatch( date -> date.isBefore(end))) {
+        if (mensDates.stream().anyMatch( date -> date.isAfter(end))) {
             throw new InvalidDateException("The Mens Dates cannot be after the End Date.");
         }
     }

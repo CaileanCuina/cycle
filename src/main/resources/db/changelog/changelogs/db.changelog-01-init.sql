@@ -1,8 +1,8 @@
 CREATE TABLE users (
                        user_name VARCHAR(50) PRIMARY KEY,
-                       cycle_std Double,
-                       avg_cycle_len Double,
-                       avg_mens_len Double
+                       cycle_std float,
+                       avg_cycle_len float,
+                       avg_mens_len float
 );
 
 CREATE TABLE cycle_information (

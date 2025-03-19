@@ -1,0 +1,36 @@
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_USER: me
+      POSTGRES_PASSWORD: sa
+      POSTGRES_DB: cycle
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+  app:
+    image: cycle-app:latest
+    container_name: cycle-app
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/cycle
+      SPRING_DATASOURCE_USERNAME: me
+      SPRING_DATASOURCE_PASSWORD: sa
+      SPRING_PROFILES_ACTIVE: pg
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
